@@ -53,6 +53,9 @@ h2{font-size:clamp(2.4rem,6vw,4.2rem);color:var(--gold2)}
 .wish:nth-child(odd){border-radius:2rem 0 2rem 0}.wish:nth-child(even){border-radius:0 2rem 0 2rem}
 .wish q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;quotes:none;display:block}
 .wish small{color:var(--gold)}
+.like{display:block;margin-top:.9rem;background:transparent;border:1px solid var(--line);color:var(--gold);font:400 .9rem 'Jost',sans-serif;padding:.35rem .9rem;border-radius:999px;cursor:pointer;transition:background .2s}
+.like:hover{background:rgba(217,182,106,.12)}
+.like.on{background:var(--gold);color:var(--bg)}
 @keyframes pop{from{opacity:0;transform:scale(.94)}}
 .post{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;margin-top:2.5rem}
 .post input,.post textarea{flex:1 1 14rem;background:transparent;border:1px solid var(--line);color:var(--ink);font:300 1rem 'Jost',sans-serif;padding:.9rem 1.1rem;border-radius:999px}
@@ -74,18 +77,18 @@ footer .big{font:italic 300 1.8rem 'Cormorant Garamond',serif;color:var(--gold2)
 </svg>
 <p class="pre">An evening in honour of</p>
 <h1 class="name">Khadija</h1>
-<div class="date">28 OCTOBER 2010</div>
+<div class="date">WEDNESDAY · 28 OCTOBER 2026</div>
 <div class="cta"><button class="btn" id="glass">RAISE A GLASS</button></div>
 </header>
 
 <section id="arrival">
-<h2>She has arrived.</h2>
+<h2>Sweet sixteen.</h2>
 <div class="rule"></div>
-<p class="lead"><em>Tonight the world is a little brighter.</em> Khadija was born on the twenty-eighth of October, and every guest is invited to celebrate the first night of a long and beautiful life.</p>
+<p class="lead"><em>Tonight the world is a little brighter.</em> Khadija was born on the twenty-eighth of October 2010, and today she turns sixteen. Every guest is invited to celebrate the start of a bright new year of her life.</p>
 <div class="clock" id="clock" role="timer" aria-label="Time since Khadija’s birthday began">
 <div><b id="h">0</b><span>HOURS</span></div><div><b id="m">0</b><span>MINUTES</span></div><div><b id="s">0</b><span>SECONDS</span></div>
 </div>
-<p class="lead" style="font-size:.95rem">Counting from the first moment of her day.</p>
+<p class="lead" style="font-size:.95rem">Counting from the first moment of her sixteenth year.</p>
 </section>
 
 <section id="wishes">
@@ -97,18 +100,17 @@ footer .big{font:italic 300 1.8rem 'Cormorant Garamond',serif;color:var(--gold2)
 <textarea id="msg" placeholder="Your wish for Khadija" maxlength="220" aria-label="Your wish"></textarea>
 <button class="btn" id="send" type="button">SEND THE WISH</button>
 </form>
-<button class="btn" id="mk" type="button" style="display:none;margin-top:1.5rem">CREATE THE WISH BOARD</button>
 <p class="lead" id="note" style="font-size:.9rem;margin-top:1rem" role="status"></p>
 <div class="wishes" id="list">
-<div class="wish"><q>May your life be as radiant as this first night.</q><small>Mama &amp; Baba</small></div>
-<div class="wish"><q>Welcome, little star. We have been waiting for you.</q><small>Your family</small></div>
+<div class="wish"><q>May your sixteenth year be as radiant as tonight.</q><small>Mama &amp; Baba</small></div>
+<div class="wish"><q>Happy sixteenth, Khadija. We are so proud of you.</q><small>Your family</small></div>
 <div class="wish"><q>May you always walk toward the light.</q><small>With all our love</small></div>
 </div>
 </section>
 
 <footer>
-<div class="big">Khadija · 28.10.2026</div>
-<p>Born to be celebrated.</p>
+<div class="big">Khadija · 28.10.2010</div>
+<p>Sixteen and shining.</p>
 </footer>
 
 <script>
@@ -132,28 +134,24 @@ var start=new Date(2026,9,28,0,0,0);
 function clock(){var d=Math.max(0,Math.floor((Date.now()-start)/1000));
 h.textContent=Math.floor(d/3600);m.textContent=Math.floor(d%3600/60);s.textContent=d%60}
 clock();setInterval(clock,1000);
-var API='https://jsonblob.com/api/jsonBlob',JH={'Content-Type':'application/json',Accept:'application/json'};
-var bid=(location.hash||'').slice(1),seeded=list.innerHTML,last=0,mk=document.getElementById('mk');
-function card(t,n){var d=document.createElement('div');d.className='wish';var q=document.createElement('q');q.textContent=t;var m=document.createElement('small');m.textContent=n;d.appendChild(q);d.appendChild(m);return d}
+var BASE='https://ntfy.sh/khadija-sweet-sixteen-wishes-8f3a1c',seen={},all=[],likes={},liked={},lastId='all',last=0,seeded=list.innerHTML;
+try{liked=JSON.parse(localStorage.getItem('kh_liked')||'{}')||{}}catch(e){}
+function saveLiked(){try{localStorage.setItem('kh_liked',JSON.stringify(liked))}catch(e){}}
+function card(v){var d=document.createElement('div');d.className='wish';var q=document.createElement('q');q.textContent=v.t;var m=document.createElement('small');m.textContent=v.n||'A dear guest';var b=document.createElement('button');b.type='button';b.className='like'+(liked[v.id]?' on':'');b.setAttribute('aria-label','Like this wish');b.textContent='\u2665 '+(likes[v.id]||0);b.onclick=function(){like(v.id)};d.appendChild(q);d.appendChild(m);d.appendChild(b);return d}
 function burst(){if(!reduce)for(var i=0;i<60;i++)P.push(mk2(true,W/2,H*.8))}
-function render(a){if(!a.length){list.innerHTML=seeded;return}list.textContent='';a.forEach(function(v){list.appendChild(card(String(v.t||''),String(v.n||'A dear guest')))})}
-function get(){return fetch(API+'/'+bid,{headers:JH}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){return d&&Array.isArray(d.wishes)?d.wishes:[]})}
-function load(){if(bid&&bid!=='setup')get().then(render).catch(function(){})}
-function state(){
-if(bid&&bid!=='setup'){mk.style.display='none';load();return}
-if(bid==='setup'){mk.style.display='inline-block';note.textContent='Press the button once to create the shared wish board.'}
-else note.textContent='Wishes are not connected yet.'}
-mk.onclick=function(){fetch(API,{method:'POST',headers:JH,body:JSON.stringify({wishes:[]})}).then(function(r){var id=(r.headers.get('Location')||'').split('/').pop();if(!id)throw 0;bid=id;location.hash=id;mk.style.display='none';note.textContent='Your wish board is ready. Share this exact link with everyone: '+location.href}).catch(function(){note.textContent='The board could not be created. Please try again.'})};
-state();setInterval(load,6000);
+function render(){if(!all.length){list.innerHTML=seeded;return}list.textContent='';all.slice(0,200).forEach(function(v){list.appendChild(card(v))})}
+function like(id){if(liked[id])return;liked[id]=1;saveLiked();render();
+fetch(BASE,{method:'POST',body:JSON.stringify({l:id})}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(o){if(!seen[o.id]){seen[o.id]=1;likes[id]=(likes[id]||0)+1}render()}).catch(function(){delete liked[id];saveLiked();render()})}
+function parse(txt){var add=false;txt.split('\n').forEach(function(l){if(!l.trim())return;try{var o=JSON.parse(l);if(o.event!=='message'||seen[o.id])return;seen[o.id]=1;lastId=o.id;var v=JSON.parse(o.message);
+if(v.l){var k=String(v.l).slice(0,20);likes[k]=(likes[k]||0)+1;add=true}else if(v.t){all.unshift({id:o.id,n:String(v.n||'').slice(0,40),t:String(v.t).slice(0,220)});add=true}}catch(e){}});if(add)render()}
+function load(){fetch(BASE+'/json?poll=1&since='+lastId).then(function(r){if(!r.ok)throw 0;return r.text()}).then(parse).catch(function(){})}
+load();setInterval(load,8000);
 document.getElementById('send').onclick=function(){
 var t=msg.value.trim().slice(0,220),n=(who.value.trim()||'A dear guest').slice(0,40);if(!t){msg.focus();return}
-if(!bid||bid==='setup'){note.textContent='Wishes are not connected yet.';return}
 if(Date.now()-last<15000){note.textContent='Please wait a few seconds before sending another wish.';return}
 last=Date.now();
-get().then(function(a){a.unshift({n:n,t:t,at:Date.now()});a=a.slice(0,200);
-return fetch(API+'/'+bid,{method:'PUT',headers:JH,body:JSON.stringify({wishes:a})}).then(function(r){if(!r.ok)throw 0;render(a);msg.value='';note.textContent='Your wish was sent to Khadija.';burst()})})
+fetch(BASE,{method:'POST',body:JSON.stringify({n:n,t:t})}).then(function(r){if(!r.ok)throw 0;msg.value='';note.textContent='Your wish was sent to Khadija.';burst();load()})
 .catch(function(){note.textContent='The wish could not be sent. Please try again.'})};
-addEventListener('hashchange',function(){bid=(location.hash||'').slice(1);state()});
 })();
 </script>
 </body>
