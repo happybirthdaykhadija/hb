@@ -37,7 +37,7 @@ h2{font-size:clamp(2.4rem,6vw,4.2rem);color:var(--gold2)}
 .lead{max-width:38rem;margin:1.5rem auto 0;font-size:1.1rem;color:var(--mute)}
 .lead em{font-family:'Cormorant Garamond',serif;font-size:1.35em;color:var(--ink)}
 .clock{display:flex;justify-content:center;gap:clamp(.8rem,3vw,2.2rem);margin-top:2.5rem;flex-wrap:wrap}
-.clock div{min-width:5.2rem;padding:1.2rem .6rem;border:1px solid var(--line);border-radius:50% 50% 8px 8px/38% 38% 8px 8px}
+.clock div{min-width:4.4rem;padding:1.2rem .6rem;border:1px solid var(--line);border-radius:50% 50% 8px 8px/38% 38% 8px 8px}
 .clock b{display:block;font:300 clamp(2.2rem,6vw,3.4rem)/1 'Cormorant Garamond',serif;color:var(--gold2)}
 .clock span{font-size:.75rem;color:var(--mute);letter-spacing:.12em}
 .evening{background:var(--bg2);max-width:none}
@@ -80,17 +80,17 @@ footer .big{font:italic 300 1.8rem 'Cormorant Garamond',serif;color:var(--gold2)
 <div class="date">WEDNESDAY · 28 OCTOBER 2026</div>
 <div class="cta"><button class="btn" id="glass">RAISE A GLASS</button></div>
 </header>
-
+ 
 <section id="arrival">
 <h2>Sweet sixteen.</h2>
 <div class="rule"></div>
 <p class="lead"><em>Tonight the world is a little brighter.</em> Khadija was born on the twenty-eighth of October 2010, and today she turns sixteen. Every guest is invited to celebrate the start of a bright new year of her life.</p>
-<div class="clock" id="clock" role="timer" aria-label="Time since Khadija’s birthday began">
-<div><b id="h">0</b><span>HOURS</span></div><div><b id="m">0</b><span>MINUTES</span></div><div><b id="s">0</b><span>SECONDS</span></div>
+<div class="clock" id="clock" role="timer" aria-label="Khadija’s age, counting live">
+<div><b id="ay">0</b><span>YEARS</span></div><div><b id="am">0</b><span>MONTHS</span></div><div><b id="ad">0</b><span>DAYS</span></div><div><b id="h">0</b><span>HOURS</span></div><div><b id="m">0</b><span>MINUTES</span></div><div><b id="s">0</b><span>SECONDS</span></div>
 </div>
-<p class="lead" style="font-size:.95rem">Counting from the first moment of her sixteenth year.</p>
+<p class="lead" style="font-size:.95rem">Khadija’s age, counting live since 28 October 2010.</p>
 </section>
-
+ 
 <section id="wishes">
 <h2>Leave a blessing</h2>
 <div class="rule"></div>
@@ -107,12 +107,12 @@ footer .big{font:italic 300 1.8rem 'Cormorant Garamond',serif;color:var(--gold2)
 <div class="wish"><q>May you always walk toward the light.</q><small>With all our love</small></div>
 </div>
 </section>
-
+ 
 <footer>
 <div class="big">Khadija · 28.10.2010</div>
 <p>Sixteen and shining.</p>
 </footer>
-
+ 
 <script>
 (function(){
 var c=document.getElementById('fx'),x=c.getContext('2d'),W,H,P=[],reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
@@ -130,27 +130,40 @@ if(!reduce)tick();
 document.getElementById('glass').onclick=function(e){
 if(reduce)return;var r=c.getBoundingClientRect();
 for(var i=0;i<140;i++)P.push(mk2(true,e.clientX-r.left,e.clientY-r.top))};
-var start=new Date(2026,9,28,0,0,0);
-function clock(){var d=Math.max(0,Math.floor((Date.now()-start)/1000));
-h.textContent=Math.floor(d/3600);m.textContent=Math.floor(d%3600/60);s.textContent=d%60}
+function clock(){var n=new Date(),y=n.getFullYear()-2010,mo=n.getMonth()-9,d=n.getDate()-28;
+if(d<0){mo--;d+=new Date(n.getFullYear(),n.getMonth(),0).getDate()}
+if(mo<0){y--;mo+=12}
+if(y<0){y=0;mo=0;d=0}
+document.getElementById('ay').textContent=y;document.getElementById('am').textContent=mo;document.getElementById('ad').textContent=d;
+document.getElementById('h').textContent=n.getHours();document.getElementById('m').textContent=n.getMinutes();document.getElementById('s').textContent=n.getSeconds()}
 clock();setInterval(clock,1000);
-var BASE='https://ntfy.sh/khadija-sweet-sixteen-wishes-8f3a1c',seen={},all=[],likes={},liked={},lastId='all',last=0,seeded=list.innerHTML;
-try{liked=JSON.parse(localStorage.getItem('kh_liked')||'{}')||{}}catch(e){}
-function saveLiked(){try{localStorage.setItem('kh_liked',JSON.stringify(liked))}catch(e){}}
-function card(v){var d=document.createElement('div');d.className='wish';var q=document.createElement('q');q.textContent=v.t;var m=document.createElement('small');m.textContent=v.n||'A dear guest';var b=document.createElement('button');b.type='button';b.className='like'+(liked[v.id]?' on':'');b.setAttribute('aria-label','Like this wish');b.textContent='\u2665 '+(likes[v.id]||0);b.onclick=function(){like(v.id)};d.appendChild(q);d.appendChild(m);d.appendChild(b);return d}
-function burst(){if(!reduce)for(var i=0;i<60;i++)P.push(mk2(true,W/2,H*.8))}
-function render(){if(!all.length){list.innerHTML=seeded;return}list.textContent='';all.slice(0,200).forEach(function(v){list.appendChild(card(v))})}
-function like(id){if(liked[id])return;liked[id]=1;saveLiked();render();
-fetch(BASE,{method:'POST',body:JSON.stringify({l:id})}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(o){if(!seen[o.id]){seen[o.id]=1;likes[id]=(likes[id]||0)+1}render()}).catch(function(){delete liked[id];saveLiked();render()})}
-function parse(txt){var add=false;txt.split('\n').forEach(function(l){if(!l.trim())return;try{var o=JSON.parse(l);if(o.event!=='message'||seen[o.id])return;seen[o.id]=1;lastId=o.id;var v=JSON.parse(o.message);
-if(v.l){var k=String(v.l).slice(0,20);likes[k]=(likes[k]||0)+1;add=true}else if(v.t){all.unshift({id:o.id,n:String(v.n||'').slice(0,40),t:String(v.t).slice(0,220)});add=true}}catch(e){}});if(add)render()}
-function load(){fetch(BASE+'/json?poll=1&since='+lastId).then(function(r){if(!r.ok)throw 0;return r.text()}).then(parse).catch(function(){})}
-load();setInterval(load,8000);
+var BASE='https://ntfy.sh/khadija-sweet-sixteen-wishes-8f3a1c',seen={},inT={},WS={},liked={},lastId='all',last=0,seeded=list.innerHTML;
+function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+WS=ls('kh_w',{});liked=ls('kh_liked',{});
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function push(o){return fetch(BASE,{method:'POST',body:JSON.stringify(o)}).then(function(r){if(!r.ok)throw 0;return r.json()})}
+function burst(){if(!reduce)for(var i=0;i<60;i++)P.push(mk2(true,c.width/2,H*.8))}
+function card(v){var d=document.createElement('div');d.className='wish';var q=document.createElement('q');q.textContent=v.t;var m=document.createElement('small');m.textContent=v.n||'A dear guest';var b=document.createElement('button');b.type='button';b.className='like'+(liked[v.u]?' on':'');b.setAttribute('aria-label','Like this wish');b.textContent='\u2665 '+(v.k||0);b.onclick=function(){like(v.u)};d.appendChild(q);d.appendChild(m);d.appendChild(b);return d}
+function render(){var a=Object.keys(WS).map(function(k){return WS[k]}).filter(function(v){return v.t}).sort(function(x,y){return y.at-x.at});if(!a.length){list.innerHTML=seeded;return}list.textContent='';a.slice(0,200).forEach(function(v){list.appendChild(card(v))})}
+function merge(v,time){var w;
+if(v.l){var k=String(v.l).slice(0,24);w=WS[k]||(WS[k]={u:k,k:0,at:0});w.k=Math.max(w.k||0,Number(v.c)||0);return true}
+if(v.u&&v.t){var u=String(v.u).slice(0,24);w=WS[u]||(WS[u]={u:u,k:0,at:0});w.n=String(v.n||'').slice(0,40);w.t=String(v.t).slice(0,220);w.k=Math.max(w.k||0,Number(v.k)||0);w.at=Number(v.at)||time||Date.now();inT[u]=true;return true}
+return false}
+function parse(txt){var ch=false;txt.split('\n').forEach(function(l){if(!l.trim())return;try{var o=JSON.parse(l);if(o.event!=='message'||seen[o.id])return;seen[o.id]=1;lastId=o.id;if(merge(JSON.parse(o.message),o.time*1000))ch=true}catch(e){}});if(ch){sv('kh_w',WS);render()}}
+function load(){return fetch(BASE+'/json?poll=1&since='+lastId).then(function(r){if(!r.ok)throw 0;return r.text()}).then(parse)}
+function heal(){var miss=Object.keys(WS).filter(function(u){return WS[u].t&&!inT[u]}).slice(0,30),i=0;
+(function next(){if(i>=miss.length)return;var u=miss[i++];if(inT[u]){next();return}var w=WS[u];push({u:u,n:w.n,t:w.t,k:w.k||0,at:w.at}).then(function(o){seen[o.id]=1;inT[u]=true}).catch(function(){});setTimeout(next,700)})()}
+function like(u){if(liked[u]||!WS[u])return;liked[u]=1;sv('kh_liked',liked);var w=WS[u];w.k=(w.k||0)+1;sv('kh_w',WS);render();
+push({l:u,c:w.k}).catch(function(){delete liked[u];w.k--;sv('kh_liked',liked);sv('kh_w',WS);render()})}
+render();
+load().then(function(){setTimeout(function(){load().then(heal).catch(function(){})},1500+Math.random()*4000)}).catch(function(){});
+setInterval(function(){load().catch(function(){})},8000);
 document.getElementById('send').onclick=function(){
 var t=msg.value.trim().slice(0,220),n=(who.value.trim()||'A dear guest').slice(0,40);if(!t){msg.focus();return}
 if(Date.now()-last<15000){note.textContent='Please wait a few seconds before sending another wish.';return}
-last=Date.now();
-fetch(BASE,{method:'POST',body:JSON.stringify({n:n,t:t})}).then(function(r){if(!r.ok)throw 0;msg.value='';note.textContent='Your wish was sent to Khadija.';burst();load()})
+last=Date.now();var u=uid(),w={u:u,n:n,t:t,k:0,at:Date.now()};
+push(w).then(function(o){seen[o.id]=1;WS[u]=w;inT[u]=true;sv('kh_w',WS);render();msg.value='';note.textContent='Your wish was sent to Khadija.';burst()})
 .catch(function(){note.textContent='The wish could not be sent. Please try again.'})};
 })();
 </script>
