@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Gala of Khadija · 28 October 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06251d;--bg2:#0a3328;--ink:#f6ecd6;--mute:#b9c4b4;--gold:#d9b66a;--gold2:#f3dd9f;--rose:#e8b8b0;--line:rgba(217,182,106,.35);
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Jost',system-ui,sans-serif;font-weight:300;line-height:1.7;overflow-x:hidden}
+h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;margin:0;line-height:1.05}
+section{padding:clamp(4rem,10vw,8rem) 1.5rem;max-width:62rem;margin:0 auto;text-align:center}
+.hero{position:relative;min-height:100vh;min-height:100svh;max-width:none;display:flex;flex-direction:column;align-items:center;justify-content:center;
+background:radial-gradient(ellipse at 50% 0%,#14614b 0%,var(--bg2) 38%,var(--bg) 75%);overflow:hidden}
+#fx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero>*:not(canvas){position:relative;z-index:2}
+.chand{width:min(280px,60vw);margin-bottom:1rem}
+.chand *{stroke:var(--gold);fill:none;stroke-width:1}
+.chand .g{fill:var(--gold2);stroke:none;animation:tw 3s ease-in-out infinite}
+.chand .g:nth-child(even){animation-delay:1.2s}
+@keyframes tw{50%{opacity:.25}}
+.hero p.pre{font-style:italic;font-family:'Cormorant Garamond',serif;font-size:clamp(1.2rem,3vw,1.7rem);color:var(--rose);margin:0 0 .5rem}
+.name{font-size:clamp(4.5rem,19vw,13rem);font-weight:300;letter-spacing:.02em;
+background:linear-gradient(100deg,#9c7a34 0%,#f3dd9f 30%,#d9b66a 50%,#fff2c4 62%,#b08c43 100%);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s ease-in-out infinite alternate}
+@keyframes shine{to{background-position:100% 0}}
+.date{margin-top:1rem;letter-spacing:.35em;font-size:.85rem;color:var(--gold)}
+.hero .cta{margin-top:2.5rem}
+.btn{font:500 .85rem 'Jost',sans-serif;letter-spacing:.2em;color:var(--bg);background:linear-gradient(135deg,var(--gold2),var(--gold));border:0;padding:1rem 2.2rem;border-radius:999px;cursor:pointer;transition:transform .25s,box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(217,182,106,.35)}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.rule{width:min(22rem,70%);height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:2rem auto}
+h2{font-size:clamp(2.4rem,6vw,4.2rem);color:var(--gold2)}
+.lead{max-width:38rem;margin:1.5rem auto 0;font-size:1.1rem;color:var(--mute)}
+.lead em{font-family:'Cormorant Garamond',serif;font-size:1.35em;color:var(--ink)}
+.clock{display:flex;justify-content:center;gap:clamp(.8rem,3vw,2.2rem);margin-top:2.5rem;flex-wrap:wrap}
+.clock div{min-width:5.2rem;padding:1.2rem .6rem;border:1px solid var(--line);border-radius:50% 50% 8px 8px/38% 38% 8px 8px}
+.clock b{display:block;font:300 clamp(2.2rem,6vw,3.4rem)/1 'Cormorant Garamond',serif;color:var(--gold2)}
+.clock span{font-size:.75rem;color:var(--mute);letter-spacing:.12em}
+.evening{background:var(--bg2);max-width:none}
+.tl{max-width:40rem;margin:3rem auto 0;text-align:left;position:relative;padding-left:2.2rem;border-left:1px solid var(--line)}
+.tl li{list-style:none;position:relative;margin-bottom:2.2rem}
+.tl{margin-left:auto;margin-right:auto}
+.tl li::before{content:"";position:absolute;left:calc(-2.2rem - 5px);top:.65rem;width:9px;height:9px;background:var(--gold);transform:rotate(45deg)}
+.tl time{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--rose)}
+.tl h3{font-size:1.9rem;color:var(--ink)}
+.tl p{margin:.2rem 0 0;color:var(--mute)}
+.wishes{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.2rem;margin-top:2.5rem;text-align:left}
+.wish{padding:1.6rem;border:1px solid var(--line);background:linear-gradient(160deg,rgba(243,221,159,.07),transparent);animation:pop .6s ease both}
+.wish:nth-child(odd){border-radius:2rem 0 2rem 0}.wish:nth-child(even){border-radius:0 2rem 0 2rem}
+.wish q{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.35rem;quotes:none;display:block}
+.wish small{color:var(--gold)}
+@keyframes pop{from{opacity:0;transform:scale(.94)}}
+.post{display:flex;gap:.7rem;flex-wrap:wrap;justify-content:center;margin-top:2.5rem}
+.post input,.post textarea{flex:1 1 14rem;background:transparent;border:1px solid var(--line);color:var(--ink);font:300 1rem 'Jost',sans-serif;padding:.9rem 1.1rem;border-radius:999px}
+.post textarea{flex-basis:100%;border-radius:1.4rem;resize:vertical;min-height:5rem}
+::placeholder{color:#8fa293}
+footer{padding:3rem 1.5rem;text-align:center;color:var(--mute);font-size:.9rem;border-top:1px solid var(--line)}
+footer .big{font:italic 300 1.8rem 'Cormorant Garamond',serif;color:var(--gold2)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+<canvas id="fx" aria-hidden="true"></canvas>
+<svg class="chand" viewBox="0 0 200 130" aria-hidden="true">
+<path d="M100 0v22M100 22c-30 0-60 14-72 46M100 22c30 0 60 14 72 46M100 22c-14 0-26 14-30 46M100 22c14 0 26 14 30 46M28 68h144M20 76q80 18 160 0"/>
+<circle class="g" cx="28" cy="82" r="3"/><circle class="g" cx="64" cy="88" r="3"/><circle class="g" cx="100" cy="90" r="3.5"/><circle class="g" cx="136" cy="88" r="3"/><circle class="g" cx="172" cy="82" r="3"/>
+<path d="M28 85v18M64 91v28M100 93v34M136 91v28M172 85v18"/>
+<circle class="g" cx="28" cy="107" r="2.5"/><circle class="g" cx="64" cy="123" r="2.5"/><circle class="g" cx="100" cy="130" r="3"/><circle class="g" cx="136" cy="123" r="2.5"/><circle class="g" cx="172" cy="107" r="2.5"/>
+</svg>
+<p class="pre">An evening in honour of</p>
+<h1 class="name">Khadija</h1>
+<div class="date">WEDNESDAY · 28 OCTOBER 2026</div>
+<div class="cta"><button class="btn" id="glass">RAISE A GLASS</button></div>
+</header>
+
+<section id="arrival">
+<h2>She has arrived.</h2>
+<div class="rule"></div>
+<p class="lead"><em>Tonight the world is a little brighter.</em> Khadija was born on the twenty-eighth of October, and every guest is invited to celebrate the first night of a long and beautiful life.</p>
+<div class="clock" id="clock" role="timer" aria-label="Time since Khadija’s birthday began">
+<div><b id="h">0</b><span>HOURS</span></div><div><b id="m">0</b><span>MINUTES</span></div><div><b id="s">0</b><span>SECONDS</span></div>
+</div>
+<p class="lead" style="font-size:.95rem">Counting from the first moment of her day.</p>
+</section>
+
+<section id="wishes">
+<h2>Leave a blessing</h2>
+<div class="rule"></div>
+<p class="lead">Write a wish for Khadija.</p>
+<form class="post" id="f" onsubmit="return false">
+<input id="who" placeholder="Your name" maxlength="40" aria-label="Your name">
+<textarea id="msg" placeholder="Your wish for Khadija" maxlength="220" aria-label="Your wish"></textarea>
+<button class="btn" id="send" type="button">SEND THE WISH</button>
+</form>
+<button class="btn" id="mk" type="button" style="display:none;margin-top:1.5rem">CREATE THE WISH BOARD</button>
+<p class="lead" id="note" style="font-size:.9rem;margin-top:1rem" role="status"></p>
+<div class="wishes" id="list">
+<div class="wish"><q>May your life be as radiant as this first night.</q><small>Mama &amp; Baba</small></div>
+<div class="wish"><q>Welcome, little star. We have been waiting for you.</q><small>Your family</small></div>
+<div class="wish"><q>May you always walk toward the light.</q><small>With all our love</small></div>
+</div>
+</section>
+
+<footer>
+<div class="big">Khadija · 28.10.2026</div>
+<p>Born to be celebrated.</p>
+</footer>
+
+<script>
+(function(){
+var c=document.getElementById('fx'),x=c.getContext('2d'),W,H,P=[],reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+function size(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+size();addEventListener('resize',size);
+function mk2(burst,bx,by){return{x:burst?bx:Math.random()*W,y:burst?by:-10,vx:burst?(Math.random()-.5)*9:(Math.random()-.5)*.4,vy:burst?-Math.random()*8-2:Math.random()*.8+.3,r:Math.random()*2.4+.6,a:1,b:burst,h:Math.random()<.2?'#e8b8b0':'#f3dd9f'}}
+for(var i=0;i<70;i++){var p=mk2();p.y=Math.random()*H;P.push(p)}
+function tick(){
+x.clearRect(0,0,W,H);
+for(var i=P.length-1;i>=0;i--){var p=P[i];p.x+=p.vx;p.y+=p.vy;if(p.b){p.vy+=.22;p.a-=.012}
+x.globalAlpha=Math.max(p.a,0)*(.5+.5*Math.sin((p.y+i*7)/22));x.fillStyle=p.h;x.beginPath();x.arc(p.x,p.y,p.r,0,6.3);x.fill();
+if(p.y>H+10||p.a<=0){if(p.b){P.splice(i,1)}else{Object.assign(p,mk2())}}}
+requestAnimationFrame(tick)}
+if(!reduce)tick();
+document.getElementById('glass').onclick=function(e){
+if(reduce)return;var r=c.getBoundingClientRect();
+for(var i=0;i<140;i++)P.push(mk2(true,e.clientX-r.left,e.clientY-r.top))};
+var start=new Date(2026,9,28,0,0,0);
+function clock(){var d=Math.max(0,Math.floor((Date.now()-start)/1000));
+h.textContent=Math.floor(d/3600);m.textContent=Math.floor(d%3600/60);s.textContent=d%60}
+clock();setInterval(clock,1000);
+var API='https://jsonblob.com/api/jsonBlob',JH={'Content-Type':'application/json',Accept:'application/json'};
+var bid=(location.hash||'').slice(1),seeded=list.innerHTML,last=0,mk=document.getElementById('mk');
+function card(t,n){var d=document.createElement('div');d.className='wish';var q=document.createElement('q');q.textContent=t;var m=document.createElement('small');m.textContent=n;d.appendChild(q);d.appendChild(m);return d}
+function burst(){if(!reduce)for(var i=0;i<60;i++)P.push(mk2(true,W/2,H*.8))}
+function render(a){if(!a.length){list.innerHTML=seeded;return}list.textContent='';a.forEach(function(v){list.appendChild(card(String(v.t||''),String(v.n||'A dear guest')))})}
+function get(){return fetch(API+'/'+bid,{headers:JH}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){return d&&Array.isArray(d.wishes)?d.wishes:[]})}
+function load(){if(bid&&bid!=='setup')get().then(render).catch(function(){})}
+function state(){
+if(bid&&bid!=='setup'){mk.style.display='none';load();return}
+if(bid==='setup'){mk.style.display='inline-block';note.textContent='Press the button once to create the shared wish board.'}
+else note.textContent='Wishes are not connected yet.'}
+mk.onclick=function(){fetch(API,{method:'POST',headers:JH,body:JSON.stringify({wishes:[]})}).then(function(r){var id=(r.headers.get('Location')||'').split('/').pop();if(!id)throw 0;bid=id;location.hash=id;mk.style.display='none';note.textContent='Your wish board is ready. Share this exact link with everyone: '+location.href}).catch(function(){note.textContent='The board could not be created. Please try again.'})};
+state();setInterval(load,6000);
+document.getElementById('send').onclick=function(){
+var t=msg.value.trim().slice(0,220),n=(who.value.trim()||'A dear guest').slice(0,40);if(!t){msg.focus();return}
+if(!bid||bid==='setup'){note.textContent='Wishes are not connected yet.';return}
+if(Date.now()-last<15000){note.textContent='Please wait a few seconds before sending another wish.';return}
+last=Date.now();
+get().then(function(a){a.unshift({n:n,t:t,at:Date.now()});a=a.slice(0,200);
+return fetch(API+'/'+bid,{method:'PUT',headers:JH,body:JSON.stringify({wishes:a})}).then(function(r){if(!r.ok)throw 0;render(a);msg.value='';note.textContent='Your wish was sent to Khadija.';burst()})})
+.catch(function(){note.textContent='The wish could not be sent. Please try again.'})};
+addEventListener('hashchange',function(){bid=(location.hash||'').slice(1);state()});
+})();
+</script>
+</body>
+</html>
